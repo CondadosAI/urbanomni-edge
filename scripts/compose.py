@@ -121,7 +121,7 @@ def text(img, s, org, scale, col=WHITE, thick=2):
 @click.option("--line1", required=True)
 @click.option("--line2", required=True)
 @click.option("--line3", default="3D cuboids from one camera, no calibration  |  top-down view via ground homography")
-@click.option("--credit", default="Footage: Karol Majek, CC BY 3.0  |  Model: UrbanOmniDetect-2 (M. K. Turkcan), AGPL-3.0")
+@click.option("--credit", default="Footage: Karol Majek, CC BY  |  Model: UrbanOmniDetect-2 (M. K. Turkcan), AGPL-3.0")
 @click.option("--trail", default=45, type=int, help="Trail length in frames.")
 @click.option("--margin", default=0.08, type=float)
 @click.option("--plate", required=True, type=click.Path(exists=True),

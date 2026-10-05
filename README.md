@@ -100,7 +100,7 @@ The clips are not in this repository. Download them from YouTube and cut them as
 ```bash
 mkdir -p data/clips && cd data/clips
 
-# Karol Majek, "4K Road traffic video for object detection and tracking", CC BY 3.0
+# Karol Majek, "4K Road traffic video for object detection and tracking", CC BY
 uvx yt-dlp -f "bv*[height<=2160][ext=mp4]" -o karol-road-4k.mp4 https://youtu.be/MNn9qKG2UFI
 # benchmark segment: 26 s to 61 s, then 1920 wide
 ffmpeg -ss 26 -t 35 -i karol-road-4k.mp4 -an -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart karol-road-4k_seg.mp4
@@ -108,7 +108,7 @@ ffmpeg -i karol-road-4k_seg.mp4 -vf scale=1920:-2:flags=lanczos -c:v libx264 -cr
 # INT8 calibration and empty-road footage: 70 s to the end at 3 fps (no overlap with the segment)
 ffmpeg -ss 70 -i karol-road-4k.mp4 -vf "fps=3,scale=1920:-2:flags=lanczos" -c:v libx264 -crf 16 -an karol_calib_1080.mp4
 
-# Thompson Fang, Yan'an Road East / Tibet Road Middle crossing, Shanghai, CC BY 3.0
+# Thompson Fang, Yan'an Road East / Tibet Road Middle crossing, Shanghai, CC BY
 uvx yt-dlp -f "bv*[height<=2160][ext=mp4]" -o shanghai.mp4 https://youtu.be/O0LyetdH4Lg
 ffmpeg -ss 238 -i shanghai.mp4 -t 22 -an -vf "scale=1920:-2:flags=lanczos" -c:v libx264 -crf 16 -pix_fmt yuv420p shanghai_seg_1080.mp4
 ffmpeg -ss 238 -i shanghai.mp4 -t 22 -c:v libx264 -crf 16 -an shanghai_seg_4k.mp4    # demo 1
@@ -202,7 +202,7 @@ uv run python scripts/compose.py --clip data/clips/karol_cut_1080_blur.mp4 --lab
 Shanghai demos (the second reuses the first one's empty-road image, same camera):
 
 ```bash
-CREDIT="Footage: Thompson Fang, CC BY 3.0  |  Model: UrbanOmniDetect-2 (M. K. Turkcan), AGPL-3.0"
+CREDIT="Footage: Thompson Fang, CC BY  |  Model: UrbanOmniDetect-2 (M. K. Turkcan), AGPL-3.0"
 CREDIT="$CREDIT" bash scripts/make_demo.sh shanghai  data/clips/shanghai_seg_4k.mp4  data/clips/shanghai_bg_1080.mp4
 CREDIT="$CREDIT" bash scripts/make_demo.sh shanghai2 data/clips/shanghai2_seg_4k.mp4 data/clips/shanghai_bg_1080.mp4
 for n in shanghai shanghai2; do
@@ -252,10 +252,10 @@ The Apache-2.0 licence in `LICENSE` covers the code written for this repository:
 - **UrbanOmniDetect code ([mkturkcan/urbanomnidetect](https://github.com/mkturkcan/urbanomnidetect)): AGPL-3.0 by its README.** At commit `caa8537` the repository has no `LICENSE` file (GitHub reports no detected licence); its README says "This project is released under the GNU Affero General Public License v3.0". This repository does not include or redistribute any of it. The stub in `stubs/v2/` is our own two-line subclass of an Ultralytics class.
 - **Ultralytics: AGPL-3.0.** The [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) repository is AGPL-3.0, and the 8.4.61 wheel's metadata says `License: AGPL-3.0`. Every script here that loads a model imports it.
 - **TensorRT: NVIDIA proprietary.** `tensorrt-cu13` 10.16.1.11, installed by `uv sync`, declares `License: Proprietary` and ships NVIDIA's own licence terms.
-- **Footage: CC BY 3.0, not redistributed.** Both videos are marked on YouTube as "Creative Commons Attribution license (reuse allowed)" (read with yt-dlp 2026.08.19), which is YouTube's CC BY 3.0 option. This repository only documents how to fetch them.
+- **Footage: CC BY, not redistributed.** Both videos are marked on YouTube as "Creative Commons Attribution license (reuse allowed)" (read with yt-dlp 2026.08.19), which is YouTube's Creative Commons Attribution option. yt-dlp reports no licence version, so none is stated here. This repository only documents how to fetch them.
   - Karol Majek, "4K Road traffic video for object detection and tracking - free download now!", <https://youtu.be/MNn9qKG2UFI>
   - Thompson Fang, "[2160p]記錄週末傍晚的上海延安東路-西藏中路路口 In Recording of Yanan Road East-Tibet Road Middle Crossing", <https://youtu.be/O0LyetdH4Lg>
 - **open-image-models: MIT.** The [ankandrew/open-image-models](https://github.com/ankandrew/open-image-models) repository and the 0.6.0 wheel are MIT. The plate detector's ONNX file is downloaded at run time from that repository's GitHub release assets; I found no separate licence statement for the weights or their training data.
-- **Training data.** The UrbanOmniView dataset is CC BY-NC 4.0 (its Hugging Face card), but it is the training set of the first UrbanOmniDetect, not of UrbanOmniDetect-2, and nothing here downloads it. The UrbanOmniDetect-2 card lists COCO, VisDrone, KITTI, DAIR-V2X, CDrone, MeshFleet and Objaverse as its training data; I did not verify how those datasets' terms bear on the weights.
+- **Training data.** The UrbanOmniView dataset is CC BY-NC 4.0 (its Hugging Face card), but it is the training set of the first UrbanOmniDetect, not of UrbanOmniDetect-2, and nothing here downloads it. The UrbanOmniDetect-2 card lists COCO, VisDrone, KITTI, DAIR-V2X, CDrone, MeshFleet and Objaverse as its training data; I did not verify how those datasets' terms bear on the weights. One of them, KITTI, is licensed **CC BY-NC-SA 3.0, non-commercial** (cvlibs.net, checked 5 Oct 2026).
 
 **Running these scripts imports Ultralytics and loads AGPL-3.0 weights.** That is fine for study and benchmarking. Anyone who distributes a product built on them, or offers one to users over a network, must meet the AGPL-3.0 terms for Ultralytics and for UrbanOmniDetect-2 (or obtain other licences from their owners), whatever the licence of this repository.
