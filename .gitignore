@@ -1,0 +1,11 @@
+models/
+checkpoints/
+data/
+runs/
+upstream/
+.venv/
+*.mp4
+__pycache__/
+.claude/
+.env
+kernel.errors.txt

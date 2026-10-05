@@ -1,0 +1,26 @@
+[project]
+name = "urbanomni-edge"
+version = "0.1.0"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "ultralytics==8.4.61",
+  "torch",
+  "torchvision",
+  "opencv-python",
+  "scipy",
+  "scikit-learn",
+  "matplotlib",
+  "pillow",
+  "shapely",
+  "openvino",
+  "nncf",
+  "onnx",
+  "onnxslim",
+  "huggingface_hub",
+  "click",
+  "loguru",
+  "pandas",
+  "tensorrt-cu13==10.16.1.11",
+  "onnxruntime>=1.30.0",
+  "open-image-models[onnx]>=0.6.0",
+]
